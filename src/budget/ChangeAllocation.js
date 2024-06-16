@@ -1,29 +1,29 @@
-import React, { useContext, useState } from 'react';
-import { AppContext } from '../context/AppContext';
+import React, { useContext, useState } from "react";
+import { BudgetContext } from "../context/BudgetContext";
 
-const ItemSelected = (props) => {
-    const {expenses, dispatch } = useContext(AppContext);
+const ChangeAllocation = (props) => {
+    const {allocations, dispatch, Currency} = useContext(BudgetContext);
 
     const [name, setName] = useState('');
-    const [quantity, setQuantity] = useState('');
+    const [amount, setAmount] = useState('');
     const [action, setAction] = useState('');
 
     const submitEvent = () => {
         const item = {
             name: name,
-            quantity: parseInt(quantity),
+            amount: parseFloat(amount)
         };
 
         if(action === "Reduce") {
             dispatch({
-                type: 'RED_QUANTITY',
-                payload: item,
+                type: "RED_AMOUNT",
+                payload: item
             });
 
-        }else{
+        }else {
             dispatch({
-                type: 'ADD_QUANTITY',
-                payload: item,
+                type: 'ADD_AMOUNT',
+                payload: item
             });
         }
     };
@@ -35,17 +35,19 @@ const ItemSelected = (props) => {
                     <div className="input-group-prepend">
                         <label className="input-group-text"
                         htmlFor="inputGroupSelect01">
-                            Articles
+                            Departments
                         </label>
                     </div>
                     <select className="custom-select"
                     id="inputGroupSelect01"
                     onChange={(event) => setName(event.target.value)}>
                         <option defaultValue> Choisir... </option>
-                        {expenses.map((expense) => (
-                            <option key={expense.id}
-                            value={expense.name}
-                            name={expense.name}> {expense.name} </option>
+                        {allocations.map((allocation) => (
+                            <option key={allocation.id}
+                            value={allocation.name}
+                            name={allocation.name}>
+                                {allocation.name}
+                            </option>
                         ))
 
                         }
@@ -55,27 +57,29 @@ const ItemSelected = (props) => {
                     style={{ marginLeft: '2rem' }}>
                         <label className="input-group-text"
                         htmlFor="inputGroupSelect02">
-                            Quantité
+                            Allocation
                         </label>
                     </div>
                     <select className="custom-select"
                     id="inputGroupSelect02"
                     onChange={(event) => setAction(event.target.value)}>
                         <option defaultValue value="Add" name="Add">
-                            Ajouter
+                            Add
                         </option>
                         <option defaultValue value="Reduce" name="Reduce">
-                            Reduire
+                            Reduce
                         </option>
                     </select>
                     <span className="eco"
                     style={{ marginLeft: '2rem', marginRight: '8px' }}></span>
-
+                    
+                    <span className="pt-1" style={{ marginRight: "3px" }}>{Currency.id}</span>
                     <input required="required"
                     type="number" id="cost"
-                    value={quantity}
+                    value={amount}
+                    min="0.0"
                     style={{ size: 10 }} 
-                    onChange={(e) => setQuantity(e.target.value)} />
+                    onChange={(e) => setAmount(e.target.value)} />
 
                     <button className="btn btn-primary"
                     onClick={submitEvent}
@@ -86,6 +90,6 @@ const ItemSelected = (props) => {
             </div>
         </>
     );
-};
+}
 
-export default ItemSelected;
+export default ChangeAllocation;

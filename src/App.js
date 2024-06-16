@@ -1,43 +1,54 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
-import { AppProvider } from './context/AppContext';
-import CartValue from './components/CartValue';
-import ExpenseList from './components/ExpenseList';
-import ItemSelected from './components/ItemSelected';
-import Location from './components/Location';
+
+import ChangeAllocation from './budget/ChangeAllocation';
+import AllocationList from './budget/AllocationList';
+import Currency from './budget/Currency';
+import Budget from './budget/Budget';
+import { BudgetProvider } from './context/BudgetContext';
+import Remaining from './budget/Remaining';
+import Spent from './budget/Spent';
 
 function App() {
   return (
     <div className="App m-2">
-      <AppProvider>
-        <h1 className="mt-3"> Shopping App </h1>
+      <BudgetProvider >
+        <h1 className="mt-3"> Company's Budget Allocation </h1>
 
         <div className="row mt-3">
           <div className="col-sm">
-            <CartValue />
+            <Budget />
           </div>
 
           <div className="col-sm">
-            <Location />
+            <Remaining />
+          </div>
+
+          <div className="col-sm">
+            <Spent />
+          </div>
+
+          <div className="col-sm">
+            <Currency />
           </div>
         </div>
 
-        <h3 className="mt-3"> Shopping cart </h3>
+        <h3 className="mt-3"> Allocation </h3>
         <div className="row">
           <div className="col-sm">
-            <ExpenseList />
+            <AllocationList />
           </div>
         </div>
 
         
-        <h3 className="mt-3"> Ajouter les articles </h3>
+        <h3 className="mt-3"> Change allocation </h3>
         <div className="row mt-3">
           <div className="col-sm">
-            <ItemSelected />
+            <ChangeAllocation />
           </div>
         </div>
 
-      </AppProvider>
+      </BudgetProvider>
     
     </div>
   );
